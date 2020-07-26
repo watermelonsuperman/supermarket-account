@@ -11,21 +11,16 @@ class Calculator {
 
     BigDecimal calculate(Goods goods) {
         BigDecimal ratio = BigDecimal.ZERO;
+
+        if (!isBasicTaxFree(goods.getType())) {
+            ratio = BASIC_TAX_RATIO;
+        }
+
         if (goods.isImported()) {
             ratio = ratio.add(IMPORTED_TAX_RATIO);
         }
 
-        ratio = ratio.add(calculateBasicRatio(goods));
-
         return ratio.multiply(BigDecimal.valueOf(goods.getPrice())).setScale(0);
-    }
-
-    private BigDecimal calculateBasicRatio(Goods goods) {
-        if (isBasicTaxFree(goods.getType())) {
-            return BigDecimal.ZERO;
-        }
-
-        return BASIC_TAX_RATIO;
     }
 
     private boolean isBasicTaxFree(GoodsType goodsType) {
