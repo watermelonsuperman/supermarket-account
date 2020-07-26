@@ -3,11 +3,15 @@ package com.thoughtworks.basic;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class CalculatorTest {
+    private List<TaxChargeWay> taxChargeWays = Arrays.asList(new BasicTaxRatio(), new ImportedTaxRatio(), new LuxuryTaxRatio());
+
     @Test
     public void should_return_basic_tax_when_calculate_given_local_goods_and_not_tax_free() {
         //given
@@ -15,7 +19,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(100)));
@@ -28,7 +32,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.ZERO));
@@ -41,7 +45,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.ZERO));
@@ -54,7 +58,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.ZERO));
@@ -67,7 +71,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(150)));
@@ -80,7 +84,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(5)));
@@ -93,7 +97,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(2000)));
@@ -106,7 +110,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(6000)));
@@ -119,7 +123,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(7500)));
@@ -132,7 +136,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         //when
-        BigDecimal tax = calculator.calculate(goods);
+        BigDecimal tax = calculator.calculate(goods, taxChargeWays);
 
         //then
         assertThat(tax, is(BigDecimal.valueOf(3000)));
