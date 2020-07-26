@@ -2,16 +2,18 @@ package com.thoughtworks.basic;
 
 import java.math.BigDecimal;
 
-public class LuxuryTaxRatio implements TaxChargeWay {
+class LuxuryTaxRatio extends TaxChargeWay {
     private static final BigDecimal LUXURY_TAX_RATIO = BigDecimal.valueOf(0.1);
     private static final int LUXURY_RATIO_MIN_PRICE = 10001;
 
     @Override
-    public BigDecimal chargeTaxRatio(Goods goods) {
-        if (isLuxury(goods)) {
-            return LUXURY_TAX_RATIO;
-        }
-        return BigDecimal.ZERO;
+    boolean isInScope(Goods goods) {
+        return isLuxury(goods);
+    }
+
+    @Override
+    BigDecimal getDefaultRatio() {
+        return LUXURY_TAX_RATIO;
     }
 
     private boolean isLuxury(Goods goods) {

@@ -4,16 +4,18 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasicTaxRatio implements TaxChargeWay {
+class BasicTaxRatio extends TaxChargeWay {
     private static final BigDecimal BASIC_TAX_RATIO = BigDecimal.valueOf(0.1);
     private List<GoodsType> basicTaxFreeGoodsTypes = Arrays.asList(GoodsType.BOOK, GoodsType.FOOD, GoodsType.MEDICAL);
 
     @Override
-    public BigDecimal chargeTaxRatio(Goods goods) {
-        if (!isBasicTaxFree(goods.getType())) {
-            return BASIC_TAX_RATIO;
-        }
-        return BigDecimal.ZERO;
+    boolean isInScope(Goods goods) {
+        return !isBasicTaxFree(goods.getType());
+    }
+
+    @Override
+    BigDecimal getDefaultRatio() {
+        return BASIC_TAX_RATIO;
     }
 
     private boolean isBasicTaxFree(GoodsType goodsType) {
