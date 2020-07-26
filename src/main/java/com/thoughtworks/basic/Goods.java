@@ -18,4 +18,8 @@ class Goods {
     GoodsType getType() {
         return goodsType;
     }
+
+    boolean isImported() {
+        return origin.equals(Origin.IMPORTED);
+    }
 }

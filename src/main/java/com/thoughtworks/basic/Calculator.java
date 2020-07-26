@@ -6,13 +6,26 @@ import java.util.List;
 
 class Calculator {
     private static final BigDecimal BASIC_TAX_RATIO = BigDecimal.valueOf(0.1);
+    private static final BigDecimal IMPORTED_TAX_RATIO = BigDecimal.valueOf(0.05);
     private List<GoodsType> basicTaxFreeGoodsTypes = Arrays.asList(GoodsType.BOOK, GoodsType.FOOD, GoodsType.MEDICAL);
 
     BigDecimal calculate(Goods goods) {
+        BigDecimal ratio = BigDecimal.ZERO;
+        if (goods.isImported()) {
+            ratio = ratio.add(IMPORTED_TAX_RATIO);
+        }
+
+        ratio = ratio.add(calculateBasicRatio(goods));
+
+        return ratio.multiply(BigDecimal.valueOf(goods.getPrice())).setScale(0);
+    }
+
+    private BigDecimal calculateBasicRatio(Goods goods) {
         if (isBasicTaxFree(goods.getType())) {
             return BigDecimal.ZERO;
         }
-        return BASIC_TAX_RATIO.multiply(BigDecimal.valueOf(goods.getPrice())).setScale(0);
+
+        return BASIC_TAX_RATIO;
     }
 
     private boolean isBasicTaxFree(GoodsType goodsType) {

@@ -59,4 +59,17 @@ public class CalculatorTest {
         //then
         assertThat(tax, is(BigDecimal.ZERO));
     }
+
+    @Test
+    public void should_return_basic_and_imported_tax_when_calculate_given_imported_electronic_and_not_tax_free() {
+        //given
+        Goods goods = new Goods(GoodsType.ELECTRONIC, 1000, Origin.IMPORTED);
+        Calculator calculator = new Calculator();
+
+        //when
+        BigDecimal tax = calculator.calculate(goods);
+
+        //then
+        assertThat(tax, is(BigDecimal.valueOf(150)));
+    }
 }
