@@ -85,4 +85,56 @@ public class CalculatorTest {
         //then
         assertThat(tax, is(BigDecimal.valueOf(5)));
     }
+
+    @Test
+    public void should_return_only_luxury_tax_when_calculate_given_local_medical_and_is_tax_free() {
+        //given
+        Goods goods = new Goods(GoodsType.MEDICAL, 20000, Origin.LOCAL);
+        Calculator calculator = new Calculator();
+
+        //when
+        BigDecimal tax = calculator.calculate(goods);
+
+        //then
+        assertThat(tax, is(BigDecimal.valueOf(2000)));
+    }
+
+    @Test
+    public void should_return_basic_and_luxury_tax_when_calculate_given_local_non_tax_free_goods() {
+        //given
+        Goods goods = new Goods(GoodsType.ELECTRONIC, 30000, Origin.LOCAL);
+        Calculator calculator = new Calculator();
+
+        //when
+        BigDecimal tax = calculator.calculate(goods);
+
+        //then
+        assertThat(tax, is(BigDecimal.valueOf(6000)));
+    }
+
+    @Test
+    public void should_return_basic_and_imported_and_luxury_tax_when_calculate_given_imported_basic_tax_not_free_goods() {
+        //given
+        Goods goods = new Goods(GoodsType.ELECTRONIC, 30000, Origin.IMPORTED);
+        Calculator calculator = new Calculator();
+
+        //when
+        BigDecimal tax = calculator.calculate(goods);
+
+        //then
+        assertThat(tax, is(BigDecimal.valueOf(7500)));
+    }
+
+    @Test
+    public void should_return_imported_and_luxury_tax_when_calculate_given_imported_basic_tax_free_goods() {
+        //given
+        Goods goods = new Goods(GoodsType.MEDICAL, 20000, Origin.IMPORTED);
+        Calculator calculator = new Calculator();
+
+        //when
+        BigDecimal tax = calculator.calculate(goods);
+
+        //then
+        assertThat(tax, is(BigDecimal.valueOf(3000)));
+    }
 }
