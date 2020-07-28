@@ -1,25 +1,26 @@
 package com.thoughtworks.basic;
 
-class Goods {
-    private final GoodsType goodsType;
-    private final int price;
-    private final Origin origin;
+import java.math.BigDecimal;
 
-    Goods(GoodsType goodsType, int price, Origin origin) {
-        this.goodsType = goodsType;
-        this.price = price;
-        this.origin = origin;
-    }
+public class Goods {
+    GoodsName goodsName;
+    BigDecimal price;
+    Boolean isPromotionGoods;
 
-    int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    GoodsType getType() {
-        return goodsType;
+    public Goods(BigDecimal price) {
+        this.price = price;
     }
-
-    boolean isImported() {
-        return origin.equals(Origin.IMPORTED);
+    public Goods(GoodsName goodsName, BigDecimal price) {
+        this.goodsName = goodsName;
+        this.price = price;
+    }
+    public Goods(GoodsName goodsName,BigDecimal price,Boolean isPromotionGoods){
+        this.goodsName = goodsName;
+        this.price = price;
+        this.isPromotionGoods = isPromotionGoods;
     }
 }
